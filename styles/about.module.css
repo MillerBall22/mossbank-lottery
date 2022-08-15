@@ -4,8 +4,5 @@
     flex-wrap: wrap;
     padding: 20px 2rem;
     background-color: #e9ebed;
-}
-
-.ticket-card {
-    min-width: 25%;
+    color: #69ab3d;
 }

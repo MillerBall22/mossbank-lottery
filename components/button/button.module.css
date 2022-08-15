@@ -1,0 +1,14 @@
+.container {
+    background-color: #69ab3d;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    min-width: 200px;
+}
+
+.container:hover {
+    background-color: #ffffff;
+    color: #69ab3d;
+}
