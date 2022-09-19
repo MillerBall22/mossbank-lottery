@@ -1,0 +1,68 @@
+.navigationTop {
+    background-color: #69ab3d;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px;
+}
+
+.socialLinks {
+    z-index: 2;
+}
+
+.socialLink {
+    width: 40px;
+    height: 40px;
+    margin-top: 5px;
+    font-size: 28px;
+}
+
+.socialLink:hover {
+    color: #FDC226;
+}
+
+.navigationCenter {
+    background-color: #e9ebed;
+    height: 95px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 30px 10px;
+}
+
+.businessDirectory {
+    position: relative;
+    top: -8px;
+}
+
+.navigationBottom {
+    background-color: #69ab3d;
+    height: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.navigationLink {
+    font-size: 18px;
+    height: 50px;
+    min-width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navigationLink:hover {
+    border-top: #FDC226 solid 3px;
+    color: #FDC226;
+}
+
+.mossbankLogo {
+    z-index: 1;
+}
+
+.linkIcons {
+    width: 30px;
+    height: 30px;
+}
