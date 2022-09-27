@@ -7,10 +7,12 @@ import {StoreContext } from "../../store/store-context";
 
 import styles from './cart-dropdown.module.css';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const CartDropdown = () => {
     const [ticketTotal, setTicketTotal] = useState(0);
     const { state } = useContext(StoreContext);
+    const router = useRouter();
 
     const { cart } = state;
 
@@ -20,6 +22,7 @@ const CartDropdown = () => {
 
 
     const goToCheckoutHandler = () => {
+        router.push('/confirm-cart')
     };
 
     return (
@@ -28,12 +31,12 @@ const CartDropdown = () => {
                 Your Cart  
             </h3>
             <div className={styles.cartItems}>
-                {ticketTotal ? (cart.map((item) => <CartItem key={item.id} cartItem={item} />)
+                {ticketTotal ? (cart.map((item) => <CartItem key={item.ticketId} cartItem={item} />)
                     ) : (
                 <div className={styles.emptyMessage}>Your cart is empty</div>
                 )}
             </div>
-            <Button title='GO TO CHECKOUT'/>
+            <Button title='GO TO CHECKOUT' onClick={goToCheckoutHandler}/>
         </div>);
 }
 

@@ -9,21 +9,30 @@ import {FaTwitterSquare, FaFacebookSquare, FaInstagramSquare} from 'react-icons/
 import {StoreContext} from "../../store/store-context";
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 import { useEffect } from 'react';
+import LoginDropdown from '../login-dropdown/login-dropdown.component';
 
 function NavigationBar() {
-  const [isCartOpen, setIsCartOpen] = useState(false)
-  const [ticketTotal, setTicketTotal] = useState(0)
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [ticketTotal, setTicketTotal] = useState(0);
   const {state} = useContext(StoreContext);
   const {cart} = state;
 
   useEffect(() => {
     setTicketTotal(cart[0].ticketQuantity + cart[1].ticketQuantity + cart[2].ticketQuantity + cart[3].ticketQuantity)
-  },[cart])
+  }, [cart[0].ticketQuantity, cart[1].ticketQuantity, cart[2].ticketQuantity, cart[3].ticketQuantity]);
 
 
   async function toggleCart() {
-    setIsCartOpen(!isCartOpen)
+    setIsLoginOpen(false);
+    setIsCartOpen(!isCartOpen);
   }
+
+  async function toggleLogin() {
+    setIsCartOpen(false);
+    setIsLoginOpen(!isLoginOpen);
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.navigationTop}>
@@ -66,16 +75,17 @@ function NavigationBar() {
           </Link>
         </div>
         <div onClick={toggleCart}>
-          <Link href="/">
+          <Link href="">
             <a className={styles.navigationLink} ><HiShoppingCart className={styles.linkIcons}/>&nbsp;{ticketTotal} Items</a>
           </Link>
         </div>
-        <div>
-          <Link href="/">
+        <div onClick={toggleLogin}>
+          <Link href="">
             <a className={styles.navigationLink} ><RiAccountCircleFill className={styles.linkIcons}/> &nbsp;Sign In</a>
           </Link>
         </div>
         {isCartOpen && <CartDropdown/>}
+        {isLoginOpen && <LoginDropdown/>}
       </div>
     </div>
   );

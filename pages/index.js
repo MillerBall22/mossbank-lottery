@@ -20,7 +20,7 @@ export default function Home() {
           });
       setTickets('unavailable')
     }
-  }, [cart])
+  }, [cart[0].ticketQuantity, cart[1].ticketQuantity, cart[2].ticketQuantity])
 
   const regularTicketsState = 'can buy';
   
