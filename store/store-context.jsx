@@ -45,7 +45,6 @@ const storeReducer = (state, action) => {
             ticketPrice: item.ticketPrice,
             ticketQuantity: item.ticketQuantity - 1
           }
-          console.log("hello")
           return newItem;
         } else {
           return item;

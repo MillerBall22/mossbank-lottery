@@ -1,7 +1,7 @@
 .container {
     display: flex;
-    justify-content: space-evenly;
-    flex-direction: column;
+    justify-content: center;
+    flex-direction: row;
     flex-wrap: wrap;
     padding: 20px 2rem;
     background-color: #e9ebed;
@@ -9,6 +9,7 @@
 }
 
 .title {
+    width: 100%;
     margin-bottom: 20px;
 }
 
@@ -16,5 +17,28 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    flex: 1;
+    width: 100%
+}
+
+.confirmCartHeader {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: row;
+    width: 100%
+}
+
+.headerItem {
+    width: 25%
+}
+
+.cartItems {
+    display: flex;
+    flex-direction: column;
+    width: 100%
+}
+
+.emptyMessage {
+    text-align: center;
+    margin: 100px;
 }

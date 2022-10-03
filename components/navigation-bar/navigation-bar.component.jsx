@@ -1,6 +1,7 @@
 import {useContext, useState} from 'react';
 import styles from './navigation-bar.module.css';import Link from "next/link";
-import Image from 'next/image'
+import Image from 'next/image';
+import useAuth from '../../hooks/useAuth';
 
 import {HiShoppingCart} from 'react-icons/hi';
 import {RiAccountCircleFill} from 'react-icons/ri'
@@ -17,11 +18,12 @@ function NavigationBar() {
   const [ticketTotal, setTicketTotal] = useState(0);
   const {state} = useContext(StoreContext);
   const {cart} = state;
+  
+  const { user, loading } = useAuth();
 
   useEffect(() => {
     setTicketTotal(cart[0].ticketQuantity + cart[1].ticketQuantity + cart[2].ticketQuantity + cart[3].ticketQuantity)
   }, [cart[0].ticketQuantity, cart[1].ticketQuantity, cart[2].ticketQuantity, cart[3].ticketQuantity]);
-
 
   async function toggleCart() {
     setIsLoginOpen(false);
@@ -81,7 +83,7 @@ function NavigationBar() {
         </div>
         <div onClick={toggleLogin}>
           <Link href="">
-            <a className={styles.navigationLink} ><RiAccountCircleFill className={styles.linkIcons}/> &nbsp;Sign In</a>
+            <a className={styles.navigationLink} ><RiAccountCircleFill className={styles.linkIcons}/> &nbsp;{user ? 'Account Options' : 'Sign In'}</a>
           </Link>
         </div>
         {isCartOpen && <CartDropdown/>}
