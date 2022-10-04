@@ -11,16 +11,6 @@
     z-index: 5;
 }
 
-.cartItems {
-    display: flex;
-    flex-direction: column;
-}
-
-.emptyMessage {
-    margin-bottom: 240px;
-    color: black;
-}
-
 .title {
     color: black;
     margin-bottom: 10px;
@@ -30,7 +20,11 @@
     margin-bottom: 10px;
 }
 
-.errorContainer {
-    color: black;
-    margin-bottom: 20px;
+.navigationLink {
+    color: #295d09;
+    font-size: 18px;
+    min-width: 100px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }

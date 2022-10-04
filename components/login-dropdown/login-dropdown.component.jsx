@@ -1,10 +1,11 @@
 import Button from '../button/button.component';
 import { useRouter } from 'next/router';
-import useAuth from '../../hooks/useAuth';
 
 import styles from './login-dropdown.module.css';
-import { useState } from 'react';
+import {useContext, useState } from 'react';
 import FormInput from '../form-input/form-input.component';
+import cookieCutter from 'cookie-cutter'
+import {StoreContext, ACTION_TYPES} from "../../store/store-context";
 
 import {magic} from '../../lib/magic-client';
 
@@ -16,10 +17,12 @@ const LoginDropdown = () => {
     const [error, setError] = useState('');
     const [formFields, setFormFields] = useState(defaultFormFields);
     const {email} = formFields;
-
-    const { user, loading } = useAuth();
-
+    
+    const {dispatch} = useContext(StoreContext);
+    const {state} = useContext(StoreContext);
     const router = useRouter();
+
+    const {toggleLoggedin} = state;
 
     const signUpHandler = () => {
         if (!email) {
@@ -47,9 +50,18 @@ const LoginDropdown = () => {
         });
 
         if (authRequest.ok) {
+            console.log(authRequest);
           // We successfully logged in, our API
           // set authorization cookies and now we
           // can redirect to the dashboard!
+            dispatch({
+            type: ACTION_TYPES.TOGGLE_LOGIN,
+            payload: {
+              toggleLoggedin: !toggleLoggedin,
+            },
+          });
+
+          cookieCutter.set('user', 'true')
           router.push('/');
         } else {
           /* handle errors */

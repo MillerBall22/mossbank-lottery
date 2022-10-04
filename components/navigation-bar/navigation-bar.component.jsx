@@ -1,38 +1,78 @@
 import {useContext, useState} from 'react';
 import styles from './navigation-bar.module.css';import Link from "next/link";
 import Image from 'next/image';
-import useAuth from '../../hooks/useAuth';
 
 import {HiShoppingCart} from 'react-icons/hi';
 import {RiAccountCircleFill} from 'react-icons/ri'
 import {FaTwitterSquare, FaFacebookSquare, FaInstagramSquare} from 'react-icons/fa'
 
-import {StoreContext} from "../../store/store-context";
+import {StoreContext, ACTION_TYPES} from "../../store/store-context";
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 import { useEffect } from 'react';
 import LoginDropdown from '../login-dropdown/login-dropdown.component';
+import AccountOptionsDropdown from '../account-options-dropdown/account-options-dropdown.component';
+import cookieCutter from 'cookie-cutter';
 
 function NavigationBar() {
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const {dispatch} = useContext(StoreContext);
+
+  const [user, setUser] = useState(false);
   const [ticketTotal, setTicketTotal] = useState(0);
+  const [dropdownComponent, setDropdownComponent] = useState(<LoginDropdown/>)
   const {state} = useContext(StoreContext);
-  const {cart} = state;
-  
-  const { user, loading } = useAuth();
+  const {cart, cartDropdown, loginDropdown, toggleLoggedin} = state;
 
   useEffect(() => {
     setTicketTotal(cart[0].ticketQuantity + cart[1].ticketQuantity + cart[2].ticketQuantity + cart[3].ticketQuantity)
   }, [cart[0].ticketQuantity, cart[1].ticketQuantity, cart[2].ticketQuantity, cart[3].ticketQuantity]);
 
+  useEffect(() => {
+    try {
+      setUser(cookieCutter.get('user'));
+      if (user) {
+        setDropdownComponent(<AccountOptionsDropdown/>)
+      } else {
+        setDropdownComponent(<LoginDropdown/>)
+      }
+    } catch (error) {
+      setUser(false);
+      if (user) {
+          setDropdownComponent(<AccountOptionsDropdown/>)
+        } else {
+          setDropdownComponent(<LoginDropdown/>)
+        }
+    }
+
+  }, [toggleLoggedin])
+
   async function toggleCart() {
-    setIsLoginOpen(false);
-    setIsCartOpen(!isCartOpen);
+    dispatch({
+            type: ACTION_TYPES.TOGGLE_LOGIN_DROPDOWN,
+            payload: {
+              loginDropdown: false,
+            },
+          });
+    dispatch({
+            type: ACTION_TYPES.TOGGLE_CART_DROPDOWN,
+            payload: {
+              cartDropdown: !cartDropdown,
+            },
+          });
   }
 
   async function toggleLogin() {
-    setIsCartOpen(false);
-    setIsLoginOpen(!isLoginOpen);
+    dispatch({
+            type: ACTION_TYPES.TOGGLE_CART_DROPDOWN,
+            payload: {
+              cartDropdown: false,
+            },
+          });
+    dispatch({
+            type: ACTION_TYPES.TOGGLE_LOGIN_DROPDOWN,
+            payload: {
+              loginDropdown: !loginDropdown,
+            },
+          });
   }
 
   return (
@@ -86,8 +126,8 @@ function NavigationBar() {
             <a className={styles.navigationLink} ><RiAccountCircleFill className={styles.linkIcons}/> &nbsp;{user ? 'Account Options' : 'Sign In'}</a>
           </Link>
         </div>
-        {isCartOpen && <CartDropdown/>}
-        {isLoginOpen && <LoginDropdown/>}
+        {cartDropdown && <CartDropdown/>}
+        {loginDropdown && dropdownComponent}
       </div>
     </div>
   );

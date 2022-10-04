@@ -7,6 +7,9 @@ export const ACTION_TYPES = {
   ADD_TO_CART: "ADD_TO_CART",
   SUBTRACT_FROM_CART: "SUBTRACT_FROM_CART",
   REMOVE_FROM_CART: "REMOVE_FROM_CART",
+  TOGGLE_CART_DROPDOWN: "TOGGLE_CART_DROPDOWN",
+  TOGGLE_LOGIN_DROPDOWN: "TOGGLE_LOGIN_DROPDOWN",
+  TOGGLE_LOGIN: "TOGGLE_LOGIN",
 };
 
 const storeReducer = (state, action) => {
@@ -71,6 +74,18 @@ const storeReducer = (state, action) => {
       })
       return { ...state, cart: newCart };
     }
+    case ACTION_TYPES.TOGGLE_CART_DROPDOWN: {
+      const newCartDropdown = action.payload.cartDropdown
+      return { ...state, cartDropdown: newCartDropdown };
+    }
+    case ACTION_TYPES.TOGGLE_LOGIN_DROPDOWN: {
+      const newLoginDropdown = action.payload.loginDropdown
+      return { ...state, loginDropdown: newLoginDropdown };
+    }
+    case ACTION_TYPES.TOGGLE_LOGIN: {
+      const newLogin = action.payload.toggleloggedin
+      return { ...state, toggleLoggedin: newLogin };
+    }
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
@@ -108,7 +123,10 @@ const StoreProvider = ({ children }) => {
         ticketPrice: 20,
         ticketQuantity: 0
     },
-  ]
+  ],
+  cartDropdown: false,
+  loginDropdown: false,
+  toggleLoggedin: false
   };
 
   const [state, dispatch] = useReducer(storeReducer, initialState);
